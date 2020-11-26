@@ -1,7 +1,8 @@
 bootstrapPage(theme = shinytheme("flatly"),
               navbarPage("MAPA DE JOSÉ",
                          
-                         tabPanel("Mapa",
+                  navbarMenu("Mapas DPSIR",
+                         tabPanel("Drivers",
                                   basicPage("MAPA DE JOSÉ GARCÍA",
                                             tags$style(type = "text/css", "html, body {width:100%;height:100%}",
                                                        ".leaflet .legend {
@@ -13,7 +14,7 @@ bootstrapPage(theme = shinytheme("flatly"),
                                                        width: 10px;
                                                        height: 10px;
                                                        }"),
-                                            leafletOutput("mapa", width = "100%", height = 800),
+                                            leafletOutput("mapa_drivers", width = "100%", height = 800),
                                           
                                             absolutePanel(top = 10, right = 10,
                                                           checkboxInput("leyenda", "Mostrar leyenda", TRUE),
@@ -25,7 +26,105 @@ bootstrapPage(theme = shinytheme("flatly"),
                                   )
                          ),
                          
-                         navbarMenu("Variables manifiestas",
+                         tabPanel("Pressure",
+                                  basicPage("MAPA DE JOSÉ GARCÍA",
+                                            tags$style(type = "text/css", "html, body {width:100%;height:100%}",
+                                                       ".leaflet .legend {
+                                                       line-height: 10px;
+                                                       font-size: 10px;
+                                                       }",
+                                                       
+                                                       ".leaflet .legend i{
+                                                       width: 10px;
+                                                       height: 10px;
+                                                       }"),
+                                            leafletOutput("mapa_pressure", width = "100%", height = 800),
+                                            
+                                            absolutePanel(top = 10, right = 10,
+                                                          checkboxInput("leyenda", "Mostrar leyenda", TRUE),
+                                                          absolutePanel(id = "logo_tia_cony", class = "card", bottom = 20, left = 60, width = "100%", fixed=TRUE, draggable = FALSE, height = "auto",
+                                                                        tags$a(href='https://www.conacyt.gob.mx', tags$img(src='https://raw.githubusercontent.com/iskarwaluyo/mapa_agricultura_masaforestal/master/html/logo_conacyt_solo.png',height='40',width='40'))),
+                                                          absolutePanel(id = "logo_geo", class = "card", bottom = 20, left = 120, width = "100%", fixed=TRUE, draggable = FALSE, height = "auto",
+                                                                        tags$a(href='https://www.centrogeo.org.mx', tags$img(src='https://raw.githubusercontent.com/iskarwaluyo/mapa_agricultura_masaforestal/master/html/logo_centrogeo_solo.png',height='40',width='40'))),
+                                            )
+                                  )
+                         ),
+                         
+                         tabPanel("State",
+                                  basicPage("MAPA DE JOSÉ GARCÍA",
+                                            tags$style(type = "text/css", "html, body {width:100%;height:100%}",
+                                                       ".leaflet .legend {
+                                                       line-height: 10px;
+                                                       font-size: 10px;
+                                                       }",
+                                                       
+                                                       ".leaflet .legend i{
+                                                       width: 10px;
+                                                       height: 10px;
+                                                       }"),
+                                            leafletOutput("mapa_state", width = "100%", height = 800),
+                                            
+                                            absolutePanel(top = 10, right = 10,
+                                                          checkboxInput("leyenda", "Mostrar leyenda", TRUE),
+                                                          absolutePanel(id = "logo_tia_cony", class = "card", bottom = 20, left = 60, width = "100%", fixed=TRUE, draggable = FALSE, height = "auto",
+                                                                        tags$a(href='https://www.conacyt.gob.mx', tags$img(src='https://raw.githubusercontent.com/iskarwaluyo/mapa_agricultura_masaforestal/master/html/logo_conacyt_solo.png',height='40',width='40'))),
+                                                          absolutePanel(id = "logo_geo", class = "card", bottom = 20, left = 120, width = "100%", fixed=TRUE, draggable = FALSE, height = "auto",
+                                                                        tags$a(href='https://www.centrogeo.org.mx', tags$img(src='https://raw.githubusercontent.com/iskarwaluyo/mapa_agricultura_masaforestal/master/html/logo_centrogeo_solo.png',height='40',width='40'))),
+                                            )
+                                  )
+                         ),
+                         
+                         tabPanel("Impact",
+                                  basicPage("MAPA DE JOSÉ GARCÍA",
+                                            tags$style(type = "text/css", "html, body {width:100%;height:100%}",
+                                                       ".leaflet .legend {
+                                                       line-height: 10px;
+                                                       font-size: 10px;
+                                                       }",
+                                                       
+                                                       ".leaflet .legend i{
+                                                       width: 10px;
+                                                       height: 10px;
+                                                       }"),
+                                            leafletOutput("mapa_impact", width = "100%", height = 800),
+                                            
+                                            absolutePanel(top = 10, right = 10,
+                                                          checkboxInput("leyenda", "Mostrar leyenda", TRUE),
+                                                          absolutePanel(id = "logo_tia_cony", class = "card", bottom = 20, left = 60, width = "100%", fixed=TRUE, draggable = FALSE, height = "auto",
+                                                                        tags$a(href='https://www.conacyt.gob.mx', tags$img(src='https://raw.githubusercontent.com/iskarwaluyo/mapa_agricultura_masaforestal/master/html/logo_conacyt_solo.png',height='40',width='40'))),
+                                                          absolutePanel(id = "logo_geo", class = "card", bottom = 20, left = 120, width = "100%", fixed=TRUE, draggable = FALSE, height = "auto",
+                                                                        tags$a(href='https://www.centrogeo.org.mx', tags$img(src='https://raw.githubusercontent.com/iskarwaluyo/mapa_agricultura_masaforestal/master/html/logo_centrogeo_solo.png',height='40',width='40'))),
+                                            )
+                                  )
+                         ),
+                         
+                         tabPanel("Response",
+                                  basicPage("MAPA DE JOSÉ GARCÍA",
+                                            tags$style(type = "text/css", "html, body {width:100%;height:100%}",
+                                                       ".leaflet .legend {
+                                                       line-height: 10px;
+                                                       font-size: 10px;
+                                                       }",
+                                                       
+                                                       ".leaflet .legend i{
+                                                       width: 10px;
+                                                       height: 10px;
+                                                       }"),
+                                            leafletOutput("mapa_response", width = "100%", height = 800),
+                                            
+                                            absolutePanel(top = 10, right = 10,
+                                                          checkboxInput("leyenda", "Mostrar leyenda", TRUE),
+                                                          absolutePanel(id = "logo_tia_cony", class = "card", bottom = 20, left = 60, width = "100%", fixed=TRUE, draggable = FALSE, height = "auto",
+                                                                        tags$a(href='https://www.conacyt.gob.mx', tags$img(src='https://raw.githubusercontent.com/iskarwaluyo/mapa_agricultura_masaforestal/master/html/logo_conacyt_solo.png',height='40',width='40'))),
+                                                          absolutePanel(id = "logo_geo", class = "card", bottom = 20, left = 120, width = "100%", fixed=TRUE, draggable = FALSE, height = "auto",
+                                                                        tags$a(href='https://www.centrogeo.org.mx', tags$img(src='https://raw.githubusercontent.com/iskarwaluyo/mapa_agricultura_masaforestal/master/html/logo_centrogeo_solo.png',height='40',width='40'))),
+                                            )
+                                  )
+                         )
+              ),
+                         
+                         
+                         navbarMenu("Datos DPSIR",
                                     tabPanel("INDICADORES 1",
                                              h2("MADERABLE"),
                                              fluidRow(
@@ -120,6 +219,8 @@ bootstrapPage(theme = shinytheme("flatly"),
                          
               )
               
+)
+)
 )
 )
 )

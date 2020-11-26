@@ -15,23 +15,18 @@ library(reshape2)
 library(ggcorrplot)
 library(rgeos)
 
+ac_mapa <- readOGR("https://raw.githubusercontent.com/iskarwaluyo/dpsir_model_oaxaca/main/data/raw_data/geojson/oax_mun.geojson")
+
+
 # LECTURA DE SHAPE BASE DE ÁREAS DE CONTROL DE GITHUB
-# FUENTE: ACTUALIZACIÓN DEL MARCO SENSAL AGROPECUARIO 2016
+# FUENTE: ACTUALIZACIÓN DEL MARCO SENSAL MADERABLE 2016
 
-
-setwd("/home/iskar/Documents/PAPER_JOSEGARCIA/MAPA/data/raw_data/geojson")
-ac_mapa <- readOGR("oax_mun.geojson")
-
-# LECTURA DE INDICADORES DE LA PRODUCCIÓN FORESTAL DE GITHUB
-# FUENTE: ACTUALIZACIÓN DEL MARCO SENSAL AGROPECUARIO 2016
-setwd("/home/iskar/Documents/PAPER_JOSEGARCIA/MAPA/data/raw_data/csv/maderable")
-
-apm <- read.csv(file = "apm.csv", header = TRUE)
-apnm <- read.csv(file = "apnm.csv", header = TRUE)
-pm <- read.csv(file = "pm.csv", header = TRUE)
-pnm <- read.csv(file = "pnm.csv", header = TRUE)
-vpm <- read.csv(file = "vpm.csv", header = TRUE)
-vpnm <- read.csv(file = "vpnm.csv", header = TRUE)
+apm <- import("https://raw.githubusercontent.com/iskarwaluyo/dpsir_model_oaxaca/main/data/raw_data/csv/maderable/apm.csv")
+apnm <- import("https://raw.githubusercontent.com/iskarwaluyo/dpsir_model_oaxaca/main/data/raw_data/csv/maderable/apnm.csv")
+pm <- import("https://raw.githubusercontent.com/iskarwaluyo/dpsir_model_oaxaca/main/data/raw_data/csv/maderable/pm.csv")
+pnm <- import("https://raw.githubusercontent.com/iskarwaluyo/dpsir_model_oaxaca/main/data/raw_data/csv/maderable/pnm.csv")
+vpm <- import("https://raw.githubusercontent.com/iskarwaluyo/dpsir_model_oaxaca/main/data/raw_data/csv/maderable/vpm.csv")
+vpnm <- import("https://raw.githubusercontent.com/iskarwaluyo/dpsir_model_oaxaca/main/data/raw_data/csv/maderable/vpnm.csv")
 
 # CONVERTIR TODOS LOS ENCABEZADOS A MAYUSCULAS
 colnames(apm) <- toupper(colnames(apm)) 
@@ -51,14 +46,13 @@ ac_mapa_maderable <- merge(ac_mapa, datos_maderable, by = "CVEGEO", all.x = TRUE
 
 # LECTURA DE INDICADORES DE LA PRODUCCIÓN AGRICOLA DE GITHUB
 # FUENTE: ACTUALIZACIÓN DEL MARCO SENSAL AGROPECUARIO 2016
-setwd("/home/iskar/Documents/PAPER_JOSEGARCIA/MAPA/data/raw_data/csv/agricola")
 
-scc <- read.csv(file = "scc.csv", header = TRUE)
-ssc <- read.csv(file = "ssc.csv", header = TRUE)
-vpc <- read.csv(file = "vpc.csv", header = TRUE)
-sct <- read.csv(file = "sct_ha.csv", header = TRUE)
-ssr <- read.csv(file = "ssr.csv", header = TRUE)
-sst <- read.csv(file = "sst.csv", header = TRUE)
+scc <- import("https://raw.githubusercontent.com/iskarwaluyo/dpsir_model_oaxaca/main/data/raw_data/csv/agricola/scc.csv")
+ssc <- import("https://raw.githubusercontent.com/iskarwaluyo/dpsir_model_oaxaca/main/data/raw_data/csv/agricola/ssc.csv")
+vpc <- import("https://raw.githubusercontent.com/iskarwaluyo/dpsir_model_oaxaca/main/data/raw_data/csv/agricola/vpc.csv")
+sct <- import("https://raw.githubusercontent.com/iskarwaluyo/dpsir_model_oaxaca/main/data/raw_data/csv/agricola/sct.csv")
+ssr <- import("https://raw.githubusercontent.com/iskarwaluyo/dpsir_model_oaxaca/main/data/raw_data/csv/agricola/ssr.csv")
+sst <- import("https://raw.githubusercontent.com/iskarwaluyo/dpsir_model_oaxaca/main/data/raw_data/csv/agricola/sst.csv")
 
 # CONVERTIR TODOS LOS ENCABEZADOS A MAYUSCULAS
 colnames(scc) <- toupper(colnames(scc)) 
@@ -73,13 +67,11 @@ datos_agricola <- datos_agricola[,-2]
 
 ac_mapa_agricola <- merge(ac_mapa, datos_agricola, by = "CVEGEO", all.x = TRUE, all.y = TRUE)
 
-
 # LECTURA DE INDICADORES DE LA PRODUCCIÓN AGRICOLA DE GITHUB
 # FUENTE: ACTUALIZACIÓN DEL MARCO SENSAL AGROPECUARIO 2016
-setwd("/home/iskar/Documents/PAPER_JOSEGARCIA/MAPA/data/raw_data/csv/ganadera")
 
-pt <- read.csv(file = "pt.csv", header = TRUE)
-vpt <- read.csv(file = "vpt.csv", header = TRUE)
+pt <- import("https://raw.githubusercontent.com/iskarwaluyo/dpsir_model_oaxaca/main/data/raw_data/csv/ganadera/pt.csv")
+vpt <- import("https://raw.githubusercontent.com/iskarwaluyo/dpsir_model_oaxaca/main/data/raw_data/csv/ganadera/vpt.csv")
 
 # CONVERTIR TODOS LOS ENCABEZADOS A MAYUSCULAS
 colnames(pt) <- toupper(colnames(pt)) 
@@ -92,10 +84,10 @@ datos_ganadera <- datos_ganadera[,-2]
 ac_mapa_ganadera <- merge(ac_mapa, datos_ganadera, by = "CVEGEO", all.x = TRUE, all.y = TRUE)
 
 # CREAR ARCHIVOS TIPO RData PARA ALMACENAR LOS RESULTADOS DEL PROCESAMIENTO DE LOS DATOS
-setwd("/home/iskar/Documents/PAPER_JOSEGARCIA/MAPA/data/Rdata/")
+setwd("/home/iskar/Documents/PAPER_JOSEGARCIA/dpsir_model_oaxaca/data/Rdata/")
 
 save(ac_mapa, ac_mapa_maderable, ac_mapa_agricola, ac_mapa_ganadera, file = "carto.RData")
 save(apm, apnm, pm, pnm, vpm, vpnm, scc, ssc, vpc, ssr, sst, pt, vpt, file = "datos.RData")
 
 # REGRESAR AL ENTORNO GENERAL LOCAL
-setwd("/home/iskar/Documents/PAPER_JOSEGARCIA/MAPA")
+setwd("/home/iskar/Documents/PAPER_JOSEGARCIA/dpsir_model_oaxaca/data")
