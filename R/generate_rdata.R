@@ -90,12 +90,23 @@ ac_mapa_ganadera <- merge(ac_mapa, datos_ganadera, by = "CVEGEO", all.x = TRUE, 
 pob <- import("https://raw.githubusercontent.com/iskarwaluyo/dpsir_model_oaxaca/main/data/raw_data/csv/pob.csv")
 
 # CONVERTIR TODOS LOS ENCABEZADOS A MAYUSCULAS
-colnames(pob) <- toupper(colnames(pt)) 
-colnames(pob) <- toupper(colnames(vpt))
+colnames(pob) <- toupper(colnames(pob)) 
 
 datos_pob <- cbind(pob)
 
 ac_mapa_pob <- merge(ac_mapa, datos_pob, by = "CVEGEO", all.x = TRUE, all.y = TRUE)
+
+# PSA
+
+psa <- import("https://raw.githubusercontent.com/iskarwaluyo/dpsir_model_oaxaca/main/data/raw_data/csv/psa.csv")
+
+# CONVERTIR TODOS LOS ENCABEZADOS A MAYUSCULAS
+colnames(psa) <- toupper(colnames(psa)) 
+
+datos_psa <- cbind(psa)
+
+ac_mapa_psa <- merge(ac_mapa, datos_psa, by = "CVEGEO", all.x = TRUE, all.y = TRUE)
+
 
 # DATOS DE AUTOCORRELACIONES
 
@@ -107,7 +118,7 @@ ac_mapa_autocorr <- merge(ac_mapa, autocorr1, by = "CVEGEO", all.x = TRUE, all.y
 setwd("/home/iskar/Documents/PAPER_JOSEGARCIA/dpsir_model_oaxaca/data/Rdata/")
 
 save(ac_mapa, ac_mapa_maderable, ac_mapa_agricola, ac_mapa_ganadera, ac_mapa_autocorr, file = "carto.RData")
-save(apm, apnm, pm, pnm, vpm, vpnm, scc, ssc, vpc, ssr, sst, pt, vpt, autocorr1, file = "datos.RData")
+save(apm, apnm, pm, pnm, vpm, vpnm, scc, ssc, vpc, ssr, sst, pt, vpt, pob, psa, autocorr1, file = "datos.RData")
 
 
 # REGRESAR AL ENTORNO GENERAL LOCAL
