@@ -71,7 +71,7 @@ geoda_colors <- c(azul_a, azul_b, blanco, rojo_a, rojo_b)
 
 # PALETA DE COLORES
 
-pal <- colorFactor(c("white", "red", "blue", "green", "grey"), 0:4)
+pal <- colorFactor(c("white", "red", "blue", "pink", "grey"), 0:4)
 palb <- colorFactor( palette="Spectral", 1:7)
 
 

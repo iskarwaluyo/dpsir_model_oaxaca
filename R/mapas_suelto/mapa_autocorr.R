@@ -12,6 +12,25 @@ m5 <- leaflet(ac_mapa) %>%
               fillColor = ~pal(as.numeric(CVE_MUN)),
               label = ~paste0(NOMGEO, ": ", formatC(NOMGEO, big.mark = ",")))
 
+m5 <- m5 %>%  addPolygons(data = ac_mapa_autocorr, stroke = FALSE, smoothFactor = 0.3,
+                          options = pathOptions(pane = "A"),
+                          fillOpacity = 1,
+                          fillColor = ~pal(VPM_LISA_CL),
+                          opacity = .3,
+                          weight = 1,
+                          color = "#4D4D4D",
+                          dashArray = "2",
+                          highlight = highlightOptions(
+                            weight = 1,
+                            color = "#4D4D4D",
+                            fillOpacity = 0.1,
+                            dashArray = "2",
+                            bringToFront = TRUE),
+                          group = "PROD MADERABLE",
+                          labelOptions = labelOptions(
+                            style = list("font-weight" = "normal", padding = "3px 8px"),
+                            textsize = "15px",
+                            direction = "auto"))
 
 m5 <- m5 %>%  addPolygons(data = ac_mapa_autocorr, stroke = FALSE, smoothFactor = 0.3,
                           options = pathOptions(pane = "B"),
