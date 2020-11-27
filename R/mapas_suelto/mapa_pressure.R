@@ -8,14 +8,14 @@ m1 <- leaflet(ac_mapa) %>%
   addTiles(group = "Open Street Map") %>%
   addProviderTiles(providers$Stamen.Toner, group = "Toner") %>%
   addProviderTiles(providers$Stamen.TonerLite, group = "Toner Lite") %>%
-  addPolygons(stroke = FALSE, smoothFactor = 0.3, fillOpacity = 1,
+  addPolygons(stroke = FALSE, smoothFactor = 0.3, fillOpacity = .2,
               fillColor = ~pal(as.numeric(CVE_MUN)),
               label = ~paste0(NOMGEO, ": ", formatC(NOMGEO, big.mark = ",")))
 
 m1 <- m1 %>%  addPolygons(data = ac_mapa_agricola, stroke = FALSE, smoothFactor = 0.3,
                           options = pathOptions(pane = "A"),
                           fillOpacity = .7,
-                          fillColor = ~pal_agricola(as.numeric(SSC_2016)),
+                          fillColor = ~pal_vpc(as.numeric(SSC_2016)),
                           opacity = .3,
                           weight = 1,
                           color = "#4D4D4D",

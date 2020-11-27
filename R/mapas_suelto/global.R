@@ -24,15 +24,38 @@ library(colorspace)
 library(revealjs)
 library(ggpmisc)
 library(magrittr)
+library(OneR)
 
 load(url("https://raw.githubusercontent.com/iskarwaluyo/dpsir_model_oaxaca/main/data/Rdata/datos.RData"))
 load(url("https://raw.githubusercontent.com/iskarwaluyo/dpsir_model_oaxaca/main/data/Rdata/carto.RData"))
 load(url("https://raw.githubusercontent.com/iskarwaluyo/dpsir_model_oaxaca/main/data/Rdata/autocorrelaciones.RData"))
 
+
 bins_vpm <- c(0, 2, 10, 50, 250, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000, Inf)
+pal_vpm <- colorBin( palette="viridis", domain = ac_mapa_maderable$VPM_2016, bins = bins_vpm)
+
 bins_vpnm <- c(0, 2, 10, 50, 250, 500, 1000, 2000, 4000, Inf)
+pal_vpnm <- colorBin( palette="viridis", domain = ac_mapa_maderable$VPNM_2016, bins = bins_vpnm)
+
 bins_vpc <- c(0, 500, 2500, 12500, 62500, 312500, Inf)
+pal_vpc <- colorBin( palette="viridis", domain = ac_mapa_agricola$VPC_2016, bins = bins_vpc)
+
 bins_vpt <- c(0, 100, 500, 2500, 12500, 62500, 312500, Inf)
+pal_vpt <- colorBin( palette="viridis", domain = ac_mapa_ganadera$VPT_2016, bins = bins_vpt)
+
+bins_pob <- c(50, 250, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000, Inf)
+pal_pob <- colorBin(palette = "viridis", domain = ac_mapa_pob$POB_2010, bins = bins_pob)
+
+bins_psa <- c(0, 100, 500, 2500, 12500, 62500, Inf)
+pal_psa <- colorBin(palette = "viridis", domain = ac_mapa_psa$sum, bins = bins_pob)
+
+pal_prod_maderable <- colorBin(palette="viridis", domain = ac_mapa_maderable$APM_2016, bins = bins_vpm)
+pal_prod_no_maderable <- colorBin(palette="viridis", domain = ac_mapa_maderable$APNM_2016, bins = bins_vpnm)
+
+pal_autocorr <- colorBin( palette="magma", domain = ac_mapa_autocorr$VPT_LISA_CL, bins = bins_autocorr)
+
+
+
 bins_pct <- c(0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
 bins_autocorr <- c(0,1,2,3,4)
 
@@ -51,15 +74,6 @@ geoda_colors <- c(azul_a, azul_b, blanco, rojo_a, rojo_b)
 pal <- colorFactor(c("white", "red", "blue", "green", "grey"), 0:4)
 palb <- colorFactor( palette="Spectral", 1:7)
 
-pal_maderable <- colorBin( palette="viridis", domain = ac_mapa_maderable$VPM_2016, bins = bins_vpm)
-pal_no_maderable <- colorBin( palette="viridis", domain = ac_mapa_maderable$VPNM_2016, bins = bins_vpnm)
-pal_agricola <- colorBin( palette="viridis", domain = ac_mapa_agricola$VPC_2016, bins = bins_vpc)
-pal_ganadera <- colorBin( palette="viridis", domain = ac_mapa_ganadera$VPT_2016, bins = bins_vpt)
-
-pal_prod_maderable <- colorBin(palette="magma", domain = ac_mapa_maderable$APM_2016, bins = bins_vpm)
-pal_prod_no_maderable <- colorBin(palette="magama", domain = ac_mapa_maderable$APNM_2016, bins = bins_vpnm)
-
-pal_autocorr <- colorBin( palette="magma", domain = ac_mapa_autocorr$VPT_LISA_CL, bins = bins_autocorr)
 
 #pal_0b <- colorBin( palette="Set1", domain = autocorr$LISA_CLdef, bins = bins_autocorr)
 #pal_0c <- colorBin( palette="heat", domain = autocorr$LISA_CLdeg, bins = bins_autocorr)
@@ -93,6 +107,11 @@ pop_driver_ganadera <- paste0("<b><br/> MUNICIPIO: </b>", ac_mapa$NOMGEO,
                               "<b><br/> VALOR DE PRODUCCIÓN DE GANADERA: </b>", ac_mapa_ganadera$VPT_2016,
                               "<b><br/> VOLUMEN DE PRODUCCIÓN GANADERA: </b>", ac_mapa_ganadera$PT_2016)
 
+
+pop_driver_poblacion <- paste0("<b><br/> MUNICIPIO: </b>", ac_mapa$NOMGEO,
+                              "<b><br/> SUPERFICIE: </b>", ac_mapa$AREA,
+                              "<b><br/> POBLACIÓN: </b>", ac_mapa_pob$POB_2010)
+
 # POP-UPS PRESSURE
 
 pop_pressure_agricola <- paste0("<b><br/> MUNICIPIO: </b>", ac_mapa$NOMGEO,
@@ -115,3 +134,17 @@ pop_impact_maderable <- paste0("<b><br/> MUNICIPIO: </b>", ac_mapa$NOMGEO,
 pop_impact_no_maderable <- paste0("<b><br/> MUNICIPIO: </b>", ac_mapa$NOMGEO,
                                   "<b><br/> SUPERFICIE: </b>", ac_mapa$AREA,
                                   "<b><br/> VALOR DE PRODUCCIÓN NO-MADERABLE: </b>", ac_mapa_maderable$VPNM_2016)
+
+pop_impact_agricola <- paste0("<b><br/> MUNICIPIO: </b>", ac_mapa$NOMGEO,
+                                  "<b><br/> SUPERFICIE: </b>", ac_mapa$AREA,
+                                  "<b><br/> VALOR DE PRODUCCIÓN AGRÍCOLA: </b>", ac_mapa_agricola$VPC_2016)
+
+pop_impact_ganadera <- paste0("<b><br/> MUNICIPIO: </b>", ac_mapa$NOMGEO,
+                                 "<b><br/> SUPERFICIE: </b>", ac_mapa$AREA,
+                                 "<b><br/> VALOR DE PRODUCCIÓN GANADERA: </b>", ac_mapa_ganadera$VPT_2016)
+
+# POP-UPS RESPONSE
+
+pop_response <- paste0("<b><br/> MUNICIPIO: </b>", ac_mapa$NOMGEO,
+                       "<b><br/> SUPERFICIE: </b>", ac_mapa$AREA,
+                       "<b><br/> SUPERFICE ELEGIBLE PARA PSA: </b>", ac_mapa_psa$sum)

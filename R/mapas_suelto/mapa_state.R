@@ -12,10 +12,10 @@ m2 <- leaflet(ac_mapa) %>%
               fillColor = ~pal(as.numeric(CVE_MUN)),
               label = ~paste0(NOMGEO, ": ", formatC(NOMGEO, big.mark = ",")))
 
-m2 <- m2 %>%  addPolygons(data = ac_mapa_agricola, stroke = FALSE, smoothFactor = 0.3,
+m2 <- m2 %>%  addPolygons(data = ac_mapa_psa, stroke = FALSE, smoothFactor = 0.3,
                           options = pathOptions(pane = "A"),
                           fillOpacity = .7,
-                          fillColor = ~pal_agricola(as.numeric(SSC_2016)),
+                          fillColor = ~pal_psa(sum),
                           opacity = .3,
                           weight = 1,
                           color = "#4D4D4D",
@@ -26,17 +26,17 @@ m2 <- m2 %>%  addPolygons(data = ac_mapa_agricola, stroke = FALSE, smoothFactor 
                             fillOpacity = 0.1,
                             dashArray = "2",
                             bringToFront = TRUE),
-                          group = "SUPERFICIE SEMBRADA",
+                          group = "PAGOS PSA",
                           labelOptions = labelOptions(
                             style = list("font-weight" = "normal", padding = "3px 8px"),
                             textsize = "15px",
                             direction = "auto"),
-                          popup = ~pop_agricola)
+                          popup = ~pop_response)
 
 # CONTROL DE CAPAS
 m2 <- m2 %>% addLayersControl(
   baseGroups = c("Open Street Map", "Toner", "Toner Lite"),
-  overlayGroups = c("SUPERFICIE SEMBRADA"),
+  overlayGroups = c("PAGOS PSA"),
   options = layersControlOptions(collapsed = FALSE)
 )
 

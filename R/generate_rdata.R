@@ -103,9 +103,11 @@ psa <- import("https://raw.githubusercontent.com/iskarwaluyo/dpsir_model_oaxaca/
 # CONVERTIR TODOS LOS ENCABEZADOS A MAYUSCULAS
 colnames(psa) <- toupper(colnames(psa)) 
 
-datos_psa <- cbind(psa)
+psa_x <- ddply(psa, .(CVEGEO), summarise, sum = sum(SUP_MUN_ZE))
 
-ac_mapa_psa <- merge(ac_mapa, datos_psa, by = "CVEGEO", all.x = TRUE, all.y = TRUE)
+datos_psa <- cbind(psa_x)
+
+ac_mapa_psa <- merge(ac_mapa, psa_x, by = "CVEGEO", all.x = TRUE, all.y = TRUE)
 
 
 # DATOS DE AUTOCORRELACIONES
@@ -118,7 +120,7 @@ ac_mapa_autocorr <- merge(ac_mapa, autocorr1, by = "CVEGEO", all.x = TRUE, all.y
 # CREAR ARCHIVOS TIPO RData PARA ALMACENAR LOS RESULTADOS DEL PROCESAMIENTO DE LOS DATOS
 setwd("/home/iskar/Documents/PAPER_JOSEGARCIA/dpsir_model_oaxaca/data/Rdata/")
 
-save(ac_mapa, ac_mapa_maderable, ac_mapa_agricola, ac_mapa_ganadera, ac_mapa_autocorr, file = "carto.RData")
+save(ac_mapa, ac_mapa_maderable, ac_mapa_agricola, ac_mapa_ganadera, ac_mapa_autocorr, ac_mapa_pob, ac_mapa_psa, file = "carto.RData")
 save(apm, apnm, pm, pnm, vpm, vpnm, scc, ssc, vpc, ssr, sst, pt, vpt, pob, psa, autocorr1, file = "datos.RData")
 
 
