@@ -110,7 +110,8 @@ ac_mapa_psa <- merge(ac_mapa, datos_psa, by = "CVEGEO", all.x = TRUE, all.y = TR
 
 # DATOS DE AUTOCORRELACIONES
 
-autocorr1 <- read.csv(file = "autocorr_2016.csv", header = TRUE)
+autocorr1 <- import("https://raw.githubusercontent.com/iskarwaluyo/dpsir_model_oaxaca/main/data/raw_data/csv/autocorr_2016.csv")
+
 ac_mapa_autocorr <- merge(ac_mapa, autocorr1, by = "CVEGEO", all.x = TRUE, all.y = TRUE)
 
 
